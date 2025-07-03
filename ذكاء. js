@@ -1,0 +1,20 @@
+module.exports.config = {
+  name: "ذكاء",
+  version: "1.0.0",
+  hasPermssion: 0,
+  credits: "حمودي سان",
+  description: "لغز بسيط لقياس الذكاء",
+  commandCategory: "ألغاز",
+  usages: "",
+  cooldowns: 3
+};
+
+module.exports.run = async function({ api, event }) {
+  const riddles = [
+    "🧠 ما الشيء الذي لا يُكسر مهما تم إسقاطه؟ (الجواب: الظل)",
+    "🔍 ما الشيء الذي له أوراق وليس نباتًا؟ (الجواب: الكتاب)",
+    "🤓 شيء كلما أخذت منه كبر؟ (الجواب: الحفرة)"
+  ];
+  const riddle = riddles[Math.floor(Math.random() * riddles.length)];
+  return api.sendMessage(riddle, event.threadID, event.messageID);
+};
