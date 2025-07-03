@@ -1,0 +1,26 @@
+const fs = require("fs");
+const path = __dirname + "/نقاط.json";
+
+if (!fs.existsSync(path)) fs.writeFileSync(path, "{}");
+
+module.exports.config = {
+  name: "نقاط",
+  version: "1.0.0",
+  hasPermssion: 0,
+  credits: "حمودي سان",
+  description: "عرض وزيادة نقاط المستخدمين",
+  commandCategory: "ألعاب",
+  usages: "",
+  cooldowns: 5
+};
+
+module.exports.run = async function({ api, event }) {
+  let points = JSON.parse(fs.readFileSync(path));
+  const userID = event.senderID;
+
+  if (!points[userID]) points[userID] = 0;
+  points[userID] += 1;
+
+  fs.writeFileSync(path, JSON.stringify(points, null, 2));
+  return api.sendMessage(`🏆 لقد حصلت على نقطة! إجمالي نقاطك: ${points[userID]}`, event.threadID, event.messageID);
+};
